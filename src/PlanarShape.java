@@ -34,7 +34,7 @@ abstract class PlanarShape implements Comparable<PlanarShape> {
 
 
     /**
-     * <p>Implementation of the <code>compareTo()</code> method in the <code>Comparable&#60T&#62</code> interface.</p>
+     * <p>Implementation of the <code>compareTo()</code> method in the <code>Comparable&#60;T&#62;</code> interface.</p>
      * <p>Compares <code>PlanarShape</code> objects to determine which comes before.</p>
      *
      * @param o The <code>PlanarShape</code> object being compared to

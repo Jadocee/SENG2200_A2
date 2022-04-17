@@ -12,7 +12,6 @@
 
 </span>
 
-
 ## 1. For each of the programs keep track of how much time you spend designing, coding and correcting errors, and how many errors you need to correct. Sum these numbers once your implementation is complete.
 
 ### Designing
@@ -51,6 +50,7 @@
 | 23/03/2022 | File reading method using switch statement                                                                                                                                                                  | 1                  |
 | 23/03/2022 | Updated switch case to enhanced switch statement                                                                                                                                                            | 0.1                |
 | 23/03/2022 | Updated `Polygon` constructor to take a 1D `double` array to be compatible with the factory method                                                                                                          | 0.3                |
+
 ### Correcting Errors
 
 | Date       | Error                           | Time Spent (hours) |
@@ -83,15 +83,13 @@
 | 24/03/2022                | `ArrayIndexOutOfBoundsException` in PlanarShapeFactory.java                                                                                    | `Polygon` constructor had a four loop that would exceed the length of the array parameter                  |
 | 24/03/2022                | Printing unsorted list results in `null`                                                                                                       | Forgot to implement `toString()` in `LinkedList`                                                           |
 
-
 ## Including `Triangle` and `Square`
 
-> Provide a (_brief_) design of how you would further extend your **PA2** so that it
-specifically included `Triangle` and `Square` figures. Draw the UML class diagram for this new program (_intricate detail not required_). What attribute data do you need in each case?
+> Provide a (_brief_) design of how you would further extend your **PA2** so that it specifically included `Triangle` and `Square` figures. Draw the UML class diagram for this new program (_intricate detail not required_). What attribute data do you need in each case?
 
 <img src="" alt="Program with Square and Triangle - UML Class Diagram"/>
 
-## Modeling an `Ellipse` 
+## Modeling an `Ellipse`
 
 > Investigate the mathematical structure of an `Ellipse` on the Cartesian plane. How would you model the `Ellipse`? How would you then calculate its area and `originDistance()`? How would this be incorporated into your program? Draw another UML class diagram to show this.
 

@@ -6,110 +6,97 @@
  */
 
 /**
- * Stores <code>Polygon</code> objects in a linked-list data structure
- **/
-public class Node<T extends PlanarShape> {
-    // Instance variables
-    private final T data;
-    private Node<T> next;
-    private Node<T> prev;
+ * Structure for storing data and linking nodes in a data structure.
+ *
+ * @param <E> the type of elements stored.
+ */
+public class Node<E extends PlanarShape> {
+  // Instance variables
+  private final E data;
+  private Node<E> next;
+  private Node<E> prev;
 
-    /**
-     * <code>Class</code> constructor that specifies the data of the <code>Node</code> object
-     *
-     * @param data <code>Polygon</code> object that will be stored in the newly instantiated
-     *             <code>Node</code> object
-     **/
-    public Node(final T data) {
-        this.data = data;
-        next = null;
-        prev = null;
-    }
+  /**
+   * Constructor that specifies the data of the {@link Node} object.
+   *
+   * @param data object to be stored in this {@link Node}.
+   */
+  public Node(final E data) {
+    this.data = data;
+    next = null;
+    prev = null;
+  }
 
-    /**
-     * <code>Class</code> constructor
-     **/
-    public Node() {
-        data = null;
-        next = null;
-        prev = null;
-    }
+  /** Default constructor */
+  public Node() {
+    data = null;
+    next = null;
+    prev = null;
+  }
 
-    /**
-     * <code>Class</code> constructor that specifies the data, next, and previous, of the
-     * <code>Node</code> object
-     *
-     * @param data <code>Polygon</code> object that will be stored in the newly instantiated
-     *             <code>Node</code> object
-     * @param next <code>Node</code> object that will be referenced by this node's <code>next</code>
-     * @param prev <code>Node</code> object that will be referenced by this node's <code>prev</code>
-     **/
-    public Node(final T data, final Node<T> next, final Node<T> prev) {
-        this.data = data;
-        this.next = next;
-        this.prev = prev;
-    }
+  /**
+   * Constructor that specifies the data, next, and previous.
+   *
+   * @param data object to be stored in this {@link Node}.
+   * @param next {@link Node} that will be referenced by {@link Node#next}
+   * @param prev {@link Node} that will be referenced by {@link Node#prev}
+   * @see Node#getNext()
+   * @see Node#setNext(Node)
+   * @see Node#getPrev()
+   * @see Node#setPrev(Node)
+   */
+  public Node(final E data, final Node<E> next, final Node<E> prev) {
+    this.data = data;
+    this.next = next;
+    this.prev = prev;
+  }
 
-    /**
-     * Get the <code>Node</code> object that is next to this one<br/>
-     * Pre-conditions: None<br/>
-     * Post-conditions: The next <code>Node</code> object or <code>null</code> is returned
-     *
-     * @return The <code>Node</code> object referenced by this <code>Node</code> object's <code>next</code>
-     * instance variable
-     * @see #setNext(Node)
-     **/
-    public Node<T> getNext() {
-        return next;
-    }
+  /**
+   * Gets the {@link Node} that is linked next to this {@link Node}.
+   *
+   * @return The {@link Node} that is referenced by this {@link Node#next}.
+   * @see #setNext(Node)
+   */
+  public Node<E> getNext() {
+    return next;
+  }
 
-    /**
-     * Set the <code>Node</code> object that is next to this one<br/>
-     * Pre-conditions: None<br/>
-     * Post-conditions: The reference to the next <code>Node</code> object is updated
-     *
-     * @param node <code>Node</code> object that will be linked to this
-     *             <code>Node</code> object as <code>next</code>
-     * @see #getNext()
-     **/
-    public void setNext(final Node<T> node) {
-        next = node;
-    }
+  /**
+   * Sets the {@link Node} that is linked to this {@link Node} via {@link Node#next}.
+   *
+   * @param node {@link Node} to be linked.
+   * @see #getNext()
+   */
+  public void setNext(final Node<E> node) {
+    next = node;
+  }
 
-    /**
-     * Get the <code>Node</code> object that is previous to this one<br/>
-     * Pre-conditions: None<br/>
-     * Post-conditions: The previous <code>Node</code> object or <code>null</code> is returned
-     *
-     * @return The <code>Node</code> object referenced by this <code>Node</code> object's <code>prev</code>
-     * instance variable
-     * @see #setPrev(Node)
-     **/
-    public Node<T> getPrev() {
-        return prev;
-    }
+  /**
+   * Gets the {@link Node} object that is linked previous to this {@link Node}.
+   *
+   * @return The {@link Node} referenced by this {@link Node#prev}.
+   * @see #setPrev(Node)
+   */
+  public Node<E> getPrev() {
+    return prev;
+  }
 
-    /**
-     * Set the <code>Node</code> object that is previous to this one<br/>
-     * Pre-conditions: None<br/>
-     * Post-conditions: The reference to the previous <code>Node</code> object is updated
-     *
-     * @param node <code>Node</code> object that will be linked to this
-     *             <code>Node</code> object as <code>prev</code>
-     * @see #getPrev()
-     **/
-    public void setPrev(final Node<T> node) {
-        prev = node;
-    }
+  /**
+   * Sets the {@link Node} that is linked to this {@link Node} via {@link Node#prev}.
+   *
+   * @param node {@link Node} to be linked.
+   * @see #getPrev()
+   */
+  public void setPrev(final Node<E> node) {
+    prev = node;
+  }
 
-    /**
-     * Get the data of this node<br/>
-     * Pre-conditions: None<br/>
-     * Post-conditions: The data of this node is returned
-     *
-     * @return The <code>Polygon</code> object stored in the node
-     **/
-    public T getData() {
-        return data;
-    }
+  /**
+   * Gets the data of this {@link Node}
+   *
+   * @return The object stored in this {@link Node}.
+   */
+  public E getData() {
+    return data;
+  }
 }

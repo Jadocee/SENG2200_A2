@@ -3,7 +3,8 @@
  */
 public class PlanarShapeFactory {
 
-    public PlanarShapeFactory() {}
+    public PlanarShapeFactory() {
+    }
 
     public PlanarShape create(final char type, final double[] values) throws IllegalArgumentException {
         switch (type) {

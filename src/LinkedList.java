@@ -6,144 +6,151 @@
  */
 
 import java.util.Iterator;
-import java.util.function.Consumer;
 
-/**
- *
- */
-public class LinkedList<T extends PlanarShape> implements Iterable<T> {
-    private final Node<T> sentinel;
-    private int size;
+/** Implementation of a <em>circular doubly linked list</em> data structure. */
+public class LinkedList<E extends PlanarShape> implements Iterable<E> {
+  private final Node<E> sentinel;
+  private int size;
 
-    public LinkedList() {
-        sentinel = new Node<T>();
-        sentinel.setNext(sentinel);
-        sentinel.setPrev(sentinel);
-        size = 0;
+  /** Default constructor */
+  public LinkedList() {
+    sentinel = new Node<E>();
+    sentinel.setNext(sentinel);
+    sentinel.setPrev(sentinel);
+    size = 0;
+  }
+
+  /**
+   * Adds a {@link PlanarShape} object to the end of {@link LinkedList}.
+   *
+   * @param data The {@link PlanarShape} object to be appended to the end of the {@link LinkedList}.
+   */
+  public void append(final E data) throws UnsupportedOperationException {
+    final Node<E> newNode = new Node<E>(data, sentinel, sentinel.getPrev());
+    sentinel.getPrev().setNext(newNode);
+    sentinel.setPrev(newNode);
+    size++;
+  }
+
+  /**
+   * Adds a {@link PlanarShape} object to the start of {@link LinkedList}.
+   *
+   * @param data The {@link PlanarShape} object to be prepended to the {@link LinkedList}.
+   */
+  public void prepend(final E data) throws UnsupportedOperationException {
+    final Node<E> newNode = new Node<E>(data, sentinel.getNext(), sentinel);
+    sentinel.getNext().setPrev(newNode);
+    sentinel.setNext(newNode);
+    size++;
+  }
+
+  /**
+   * Adds a {@link PlanarShape} object to the {@link LinkedList} by directing the received object to
+   * {@link LinkedList#append(PlanarShape)}.
+   *
+   * @param data The {@link PlanarShape} object to be added to the list.
+   */
+  public void insert(final E data) {
+    try {
+      append(data);
+    } catch (UnsupportedOperationException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Moves cursor to the head of the list.
+   *
+   * @throws Exception if used with {@link LinkedList}.
+   * @deprecated - incompatible with {@link LinkedList}.
+   */
+  @Deprecated
+  public void reset() throws Exception {
+    throw new Exception("Use of reset() on LinkedList is invalid");
+  }
+
+  /**
+   * Moves cursor to the next item in the list.
+   *
+   * @throws Exception if used with {@link LinkedList}.
+   * @deprecated - incompatible with {@link LinkedList}.
+   */
+  @Deprecated
+  public void next() throws Exception {
+    throw new Exception("Use of next() on LinkedList is invalid");
+  }
+
+  /**
+   * Remove the {@link Node} at the head of the {@link LinkedList}.
+   *
+   * @return The data of the removed {@link Node}.
+   */
+  public E pop() {
+    final Node<E> head = sentinel.getNext();
+    head.getNext().setPrev(sentinel);
+    sentinel.setNext(head.getNext());
+    return head.getData();
+  }
+
+  /**
+   * Check if this {@link LinkedList} is empty.
+   *
+   * @return {@code true} if this {@link LinkedList} is empty.
+   */
+  public boolean isEmpty() {
+    return this.size == 0;
+  }
+
+  /**
+   * Get an {@link Iterator} for iterating over elements of an instance of {@link LinkedList}.
+   *
+   * @return An instance of {@link Iterator}.
+   * @see Iterator
+   * @see Iterable
+   * @see LinkedList
+   */
+  @Override
+  public Iterator<E> iterator() {
+    return new LinkedListIterator(this.sentinel);
+  }
+
+  /**
+   * Get a string representation of a {@link LinkedList}.
+   *
+   * @return The {@link LinkedList} object represented as a {@link String} object.
+   */
+  @Override
+  public String toString() {
+    if (this.isEmpty()) {
+      return "Empty";
     }
 
-
-    /**
-     * <p>Adds data to the end of list</p>
-     * <p>Pre-conditions: None<br/>
-     * Post-conditions: <code>PlanarShape</code> object is added to the end of the list</p>
-     *
-     * @param data The <code>PlanarShape</code> object to be appended to the end of the list
-     */
-    public void append(final T data) throws UnsupportedOperationException {
-        final Node<T> newNode = new Node<>(data, sentinel, sentinel.getPrev());
-        sentinel.getPrev().setNext(newNode);
-        sentinel.setPrev(newNode);
-        size++;
+    final Iterator<E> iterator = iterator();
+    final StringBuilder stringBuilder = new StringBuilder();
+    while (iterator.hasNext()) {
+      stringBuilder.append(iterator.next().toString()).append("\n");
     }
+    return stringBuilder.toString();
+  }
 
-    /**
-     * <p>Adds data to the start of list</p>
-     * <p>Pre-conditions: None<br/>
-     * Post-conditions: <code>PlanarShape</code> object is added to the start of the list</p>
-     *
-     * @param data The <code>PlanarShape</code> object to be prepended to the list
-     */
-    public void prepend(final T data) throws UnsupportedOperationException {
-        final Node<T> newNode = new Node<>(data, sentinel.getNext(), sentinel);
-        sentinel.getNext().setPrev(newNode);
-        sentinel.setNext(newNode);
-        size++;
-    }
+  /** Implication of the {@link Iterator} interface for iterating a {@link LinkedList}. */
+  private class LinkedListIterator implements Iterator<E> {
+    // LinkedListIterator instance variables
+    private Node<E> current;
 
-    /**
-     * <p>Add item to list</p>
-     * <p>Pre-conditions: None<br/>
-     * Post-conditions: <code>PlanarShape</code> object is added to the list</p>
-     *
-     * @param data The <code>PlanarShape</code> object to be added to the list
-     * @see LinkedList#append(PlanarShape)
-     */
-    public void insert(final T data) throws UnsupportedOperationException {
-        append(data);
-    }
-
-    /**
-     * <p>Returns to the head of the list</p>
-     * <p>Pre-conditions: None<br/>
-     * Post-conditions: <code>current</code> is updated to reference the node located at the start of the list</p>
-     *
-     * @throws Exception When used on a <code>LinkedList</code> object
-     * @deprecated Incompatible with <code>LinkedList</code>
-     */
-    @Deprecated
-    public void reset() throws Exception {
-        throw new Exception("Use of reset() on LinkedList is invalid");
-    }
-
-    /**
-     * <p>Steps to the next item in the list</p>
-     * <p>Pre-conditions: List is not empty<br/>
-     * Post-conditions: <code>current</code> is updated to reference the next node in the list</p>
-     *
-     * @throws Exception When used on a <code>LinkedList</code> object
-     * @deprecated Incompatible with <code>LinkedList</code>
-     */
-    @Deprecated
-    public void next() throws Exception {
-        throw new Exception("Use of next() on LinkedList is invalid");
-    }
-
-
-    /**
-     * Removes the item from the head of the list and returns its data
-     *
-     * @return The data of the removed <code>Node</code> object
-     */
-    public T pop() {
-        final Node<T> head = sentinel.getNext();
-        head.getNext().setPrev(sentinel);
-        sentinel.setNext(head.getNext());
-        return head.getData();
+    public LinkedListIterator(final Node<E> sentinel) {
+      this.current = sentinel;
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return new Iterator<T>() {
-            private Node<T> current = sentinel;
-
-            @Override
-            public boolean hasNext() {
-                return current.getNext() != sentinel;
-            }
-
-            @Override
-            public T next() {
-                current = current.getNext();
-                return current.getData();
-            }
-
-            @Override
-            public void remove() {
-                if (size > 0) {
-                    Node<T> temp = current.getPrev();
-                    next();
-                    temp.setNext(current);
-                    current.setPrev(temp);
-                }
-            }
-
-            @Override
-            public void forEachRemaining(Consumer<? super T> action) {
-                Iterator.super.forEachRemaining(action);
-            }
-
-
-        };
+    public boolean hasNext() {
+      return current.getNext() != sentinel;
     }
-    // TODO Implement iterator
 
     @Override
-    public String toString() {
-        if (size > 0) {
-            Iterator<T> iterator = iterator();
-//            iterator.
-        }
-        return null;
+    public E next() {
+      current = current.getNext();
+      return current.getData();
     }
+  }
 }

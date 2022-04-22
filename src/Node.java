@@ -10,7 +10,7 @@
  *
  * @param <E> the type of elements stored.
  */
-public class Node<E extends PlanarShape> {
+public class Node<E> {
   // Instance variables
   private final E data;
   private Node<E> next;

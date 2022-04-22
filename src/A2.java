@@ -75,9 +75,9 @@ public class A2 {
         } catch (IOException | NullPointerException | UnsupportedOperationException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Unsorted list");
-            System.out.print(unsortedList);
-            System.out.println("Sorted list");
+            System.out.println("Unsorted List");
+            System.out.println(unsortedList);
+            System.out.println("Sorted List");
             System.out.print(sortedList);
         }
     }

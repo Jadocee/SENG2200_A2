@@ -52,9 +52,9 @@ abstract class PlanarShape implements Comparable<PlanarShape> {
       final double thisDistance = this.originDistance();
       final double thatDistance = o.originDistance();
       if (thisDistance < thatDistance) {
-        return -1;
-      } else if (thisDistance > thatDistance) {
         return 1;
+      } else if (thisDistance > thatDistance) {
+        return -1;
       } else {
         return 0;
       }

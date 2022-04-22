@@ -6,7 +6,6 @@
  */
 
 import java.util.Iterator;
-import java.util.function.Consumer;
 
 /** Implementation of a <em>circular doubly linked list</em> data structure. */
 public class LinkedList<E extends PlanarShape> implements Iterable<E> {
@@ -156,11 +155,6 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
       final Node<E> newNode = new Node<E>(data, current, current.getPrev());
       current.getPrev().setNext(newNode);
       current.setPrev(newNode);
-    }
-
-    @Override
-    public void forEachRemaining(Consumer<? super E> action) {
-      Iterator.super.forEachRemaining(action);
     }
   }
 }

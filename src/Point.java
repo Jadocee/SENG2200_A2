@@ -7,9 +7,7 @@
  *  a vertex of a Polygon object
  */
 
-/**
- * Structure representing a point on the cartesian plane.
- */
+/** Structure representing a point on the cartesian plane. */
 public class Point {
   // Instance variables
   private final double x;
@@ -55,7 +53,8 @@ public class Point {
 
   /**
    * Get string representation of this {@link Point}.
-   * <p>Satisfies the format: <span style="font-weight: 600;">(x , y)</span></p>
+   *
+   * <p>Satisfies the format: <span style="font-weight: 600;">(x , y)</span>
    *
    * @return The {@link String} representing this {@link Point}.
    */

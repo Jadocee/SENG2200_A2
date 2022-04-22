@@ -57,8 +57,8 @@ public class SemiCircle extends PlanarShape {
   }
 
   /**
-   * Calculate the distance from the origin of the closest of the two data points and the
-   * two base extremity points (x<sub>2</sub>, y<sub>2</sub>) and (x<sub>3</sub>, y<sub>3</sub>).
+   * Calculate the distance from the origin of the closest of the two data points and the two base
+   * extremity points (x<sub>2</sub>, y<sub>2</sub>) and (x<sub>3</sub>, y<sub>3</sub>).
    *
    * @return The calculated distance as a {@code double}.
    */

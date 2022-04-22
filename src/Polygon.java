@@ -13,8 +13,8 @@ public class Polygon extends PlanarShape {
   /**
    * Constructor specifying the vertices.
    *
-   * @param values An array of {@code double} values corresponding to the x and y coordinates
-   *     of a vertex/point.
+   * @param values An array of {@code double} values corresponding to the x and y coordinates of a
+   *     vertex/point.
    */
   public Polygon(final double[] values) {
     this.points = new Point[values.length / 2 + 1];
@@ -67,8 +67,7 @@ public class Polygon extends PlanarShape {
   }
 
   /**
-   * Calculate distance from the origin of the point which is closest to the origin
-   * (0,0).
+   * Calculate distance from the origin of the point which is closest to the origin (0,0).
    *
    * @return The calculated distance as a {@code double}.
    */

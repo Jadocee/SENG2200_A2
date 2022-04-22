@@ -5,7 +5,7 @@
  * 22/03/2022
  */
 
-/** Representation of a circle that extends {@link PlanarShape}.*/
+/** Representation of a circle that extends {@link PlanarShape}. */
 public class Circle extends PlanarShape {
   // Instance variables
   private final Point centre;

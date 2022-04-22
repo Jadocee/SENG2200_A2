@@ -51,6 +51,7 @@ abstract class PlanarShape implements Comparable<PlanarShape> {
     if (diff <= (0.0005 * Math.min(thisArea, thatArea))) {
       final double thisDistance = this.originDistance();
       final double thatDistance = o.originDistance();
+      // Could be replaced with Double.compare(d1, d2)
       if (thisDistance < thatDistance) {
         return 1;
       } else if (thisDistance > thatDistance) {

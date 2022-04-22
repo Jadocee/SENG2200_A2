@@ -8,18 +8,35 @@
 /** */
 public class SortedLinkedList<E extends PlanarShape> extends LinkedList<E> {
 
-  public void insertInOrder(final E data) {
-    // TODO implement insertInOrder()
+  public SortedLinkedList() {
+    super();
   }
 
   /**
-   * Add item to list; maintaining descending order
+   * Adds an item to the list while maintaining an order of decreasing area.
    *
-   * <p>Pre-conditions: None<br>
-   * Post-conditions: <code>PlanarShape</code> object is added to the list
+   * @param data The {@link PlanarShape} object to be added to this {@link SortedLinkedList}.
+   */
+  public void insertInOrder(final E data) {
+    Node<E> current = this.sentinel.getNext();
+    while (current != this.sentinel) {
+      if (data.compareTo(current.getData()) > 0) {
+        break;
+      } else {
+        current = current.getNext();
+      }
+    }
+    final Node<E> newNode = new Node<>(data, current, current.getPrev());
+    current.getPrev().setNext(newNode);
+    current.setPrev(newNode);
+    size++;
+  }
+
+  /**
+   * Adds a {@link PlanarShape} object to the {@link SortedLinkedList} by directing incoming data to
+   * {@link SortedLinkedList#insertInOrder(PlanarShape)}.
    *
-   * @param data The <code>PlanarShape</code> object to be added to the list
-   * @see SortedLinkedList#insertInOrder(PlanarShape)
+   * @param data The {@link PlanarShape} object to be added to the list.
    */
   @Override
   public void insert(final E data) {
@@ -27,30 +44,28 @@ public class SortedLinkedList<E extends PlanarShape> extends LinkedList<E> {
   }
 
   /**
-   * Adds data to the start of list
+   * Adds a {@link PlanarShape} object to the start of {@link LinkedList}.
    *
-   * <p>Pre-conditions: None<br>
-   * Post-conditions: <code>PlanarShape</code> object is added to the start of the list
-   *
-   * @param data The <code>PlanarShape</code> object to be prepended to the list
-   * @throws Exception When used on <code>SortedLinkedList</code>
+   * @param data The {@link PlanarShape} object to be prepended to the {@link LinkedList}.
+   * @deprecated because this method is invalid on {@link SortedLinkedList}.
+   * @throws UnsupportedOperationException if used with {@link SortedLinkedList}.
    */
+  @Deprecated
   @Override
   public void prepend(final E data) throws UnsupportedOperationException {
     throw new UnsupportedOperationException("Use of prepend() is invalid on SortedLinkedList");
   }
 
   /**
-   * Adds data to the start of list
+   * Adds a {@link PlanarShape} object to the end of {@link LinkedList}.
    *
-   * <p>Pre-conditions: None<br>
-   * Post-conditions: <code>PlanarShape</code> object is added to the start of the list
-   *
-   * @param data The <code>PlanarShape</code> object to be prepended to the list
-   * @throws Exception When used on <code>SortedLinkedList</code>
+   * @param data The {@link PlanarShape} object to be appended to the end of the {@link LinkedList}.
+   * @deprecated because this method is invalid on {@link SortedLinkedList}.
+   * @throws UnsupportedOperationException if used with {@link SortedLinkedList}.
    */
+  @Deprecated
   @Override
   public void append(final E data) throws UnsupportedOperationException {
-    throw new UnsupportedOperationException("Use of prepend() is invalid on SortedLinkedList");
+    throw new UnsupportedOperationException("Use of append() is invalid on SortedLinkedList");
   }
 }

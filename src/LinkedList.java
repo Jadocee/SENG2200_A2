@@ -6,11 +6,13 @@
  */
 
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 /** Implementation of a <em>circular doubly linked list</em> data structure. */
 public class LinkedList<E extends PlanarShape> implements Iterable<E> {
-  private final Node<E> sentinel;
-  private int size;
+  // Instance variables
+  protected final Node<E> sentinel;
+  protected int size;
 
   /** Default constructor */
   public LinkedList() {
@@ -45,39 +47,35 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
   }
 
   /**
-   * Adds a {@link PlanarShape} object to the {@link LinkedList} by directing the received object to
+   * Adds a {@link PlanarShape} object to the {@link LinkedList} by directing incoming data to
    * {@link LinkedList#append(PlanarShape)}.
    *
    * @param data The {@link PlanarShape} object to be added to the list.
    */
   public void insert(final E data) {
-    try {
-      append(data);
-    } catch (UnsupportedOperationException e) {
-      e.printStackTrace();
-    }
+    append(data);
   }
 
   /**
    * Moves cursor to the head of the list.
    *
-   * @throws Exception if used with {@link LinkedList}.
-   * @deprecated - incompatible with {@link LinkedList}.
+   * @deprecated because this method is invalid on {@link LinkedList}.
+   * @throws UnsupportedOperationException if used with {@link LinkedList}.
    */
   @Deprecated
-  public void reset() throws Exception {
-    throw new Exception("Use of reset() on LinkedList is invalid");
+  public void reset() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Use of reset() on LinkedList is invalid");
   }
 
   /**
    * Moves cursor to the next item in the list.
    *
-   * @throws Exception if used with {@link LinkedList}.
-   * @deprecated - incompatible with {@link LinkedList}.
+   * @deprecated because this method is invalid on {@link LinkedList}.
+   * @throws UnsupportedOperationException if used with {@link LinkedList}.
    */
   @Deprecated
-  public void next() throws Exception {
-    throw new Exception("Use of next() on LinkedList is invalid");
+  public void next() throws UnsupportedOperationException {
+    throw new UnsupportedOperationException("Use of next() on LinkedList is invalid");
   }
 
   /**
@@ -89,6 +87,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     final Node<E> head = sentinel.getNext();
     head.getNext().setPrev(sentinel);
     sentinel.setNext(head.getNext());
+    size--;
     return head.getData();
   }
 
@@ -115,9 +114,9 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
   }
 
   /**
-   * Get a string representation of a {@link LinkedList}.
+   * Get the string representation of this {@link LinkedList}.
    *
-   * @return The {@link LinkedList} object represented as a {@link String} object.
+   * @return The {@link String} object representing this {@link LinkedList}.
    */
   @Override
   public String toString() {
@@ -125,7 +124,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
       return "Empty";
     }
 
-    final Iterator<E> iterator = iterator();
+    final Iterator<E> iterator = this.iterator();
     final StringBuilder stringBuilder = new StringBuilder();
     while (iterator.hasNext()) {
       stringBuilder.append(iterator.next().toString()).append("\n");
@@ -133,7 +132,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     return stringBuilder.toString();
   }
 
-  /** Implication of the {@link Iterator} interface for iterating a {@link LinkedList}. */
+  /** Implementation of the {@link Iterator} interface for iterating a {@link LinkedList}. */
   private class LinkedListIterator implements Iterator<E> {
     // LinkedListIterator instance variables
     private Node<E> current;
@@ -151,6 +150,17 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     public E next() {
       current = current.getNext();
       return current.getData();
+    }
+
+    public void insertBefore(final E data) {
+      final Node<E> newNode = new Node<E>(data, current, current.getPrev());
+      current.getPrev().setNext(newNode);
+      current.setPrev(newNode);
+    }
+
+    @Override
+    public void forEachRemaining(Consumer<? super E> action) {
+      Iterator.super.forEachRemaining(action);
     }
   }
 }

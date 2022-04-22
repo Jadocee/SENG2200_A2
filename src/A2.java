@@ -40,9 +40,10 @@ public class A2 {
 
     public static void main(String[] args) {
         final LinkedList<PlanarShape> unsortedList = new LinkedList<PlanarShape>();
+        final SortedLinkedList<PlanarShape> sortedList = new SortedLinkedList<PlanarShape>();
 
         try (final Scanner scanner = new Scanner(new File(args[0]))) {
-//            PlanarShape shape = null;
+            PlanarShape shape = null;
             while (scanner.hasNext()) {
                 switch (scanner.next()) {
                     case "P" -> {
@@ -50,29 +51,34 @@ public class A2 {
                         for (int i = 0; i < values.length; i++) {
                             values[i] = scanner.nextDouble();
                         }
-                        unsortedList.insert(createShape('P', values));
+                        shape = createShape('P', values);
                     }
                     case "S" -> {
                         double[] values = new double[4];
                         for (byte i = 0; i < values.length; i++) {
                             values[i] = scanner.nextDouble();
                         }
-                        unsortedList.insert(createShape('S', values));
+                        shape = createShape('S', values);
                     }
                     case "C" -> {
                         double[] values = new double[3];
                         for (byte i = 0; i < values.length; i++) {
                             values[i] = scanner.nextDouble();
                         }
-                        unsortedList.insert(createShape('C', values));
+                        shape = createShape('C', values);
                     }
                 }
+                unsortedList.insert(shape);
+                sortedList.insert(shape);
+                shape = null;
             }
         } catch (IOException | NullPointerException | UnsupportedOperationException e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Unsorted List");
+            System.out.println("Unsorted list");
             System.out.print(unsortedList);
+            System.out.println("Sorted list");
+            System.out.print(sortedList);
         }
     }
 }

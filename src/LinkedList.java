@@ -114,7 +114,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
    */
   @Override
   public Iterator<E> iterator() {
-    return new LinkedListIterator(this.sentinel, this.size);
+    return new LinkedListIterator(this.sentinel, this.modCount);
   }
 
   /**

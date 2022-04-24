@@ -30,6 +30,7 @@ public class SortedLinkedList<E extends PlanarShape> extends LinkedList<E> {
     current.getPrev().setNext(newNode);
     current.setPrev(newNode);
     size++;
+    modCount++;
   }
 
   /**

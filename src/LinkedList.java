@@ -5,13 +5,16 @@
  * 23/03/2022
  */
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /** Implementation of a <em>circular doubly linked list</em> data structure. */
 public class LinkedList<E extends PlanarShape> implements Iterable<E> {
   // Instance variables
   protected final Node<E> sentinel;
   protected int size;
+  protected transient int modCount;
 
   /** Default constructor */
   public LinkedList() {
@@ -19,6 +22,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     sentinel.setNext(sentinel);
     sentinel.setPrev(sentinel);
     size = 0;
+    modCount = 0;
   }
 
   /**
@@ -31,6 +35,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     sentinel.getPrev().setNext(newNode);
     sentinel.setPrev(newNode);
     size++;
+    modCount++;
   }
 
   /**
@@ -43,6 +48,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     sentinel.getNext().setPrev(newNode);
     sentinel.setNext(newNode);
     size++;
+    modCount++;
   }
 
   /**
@@ -87,6 +93,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     head.getNext().setPrev(sentinel);
     sentinel.setNext(head.getNext());
     size--;
+    modCount++;
     return head.getData();
   }
 
@@ -103,13 +110,11 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
    * Get an {@link Iterator} for iterating over elements of an instance of {@link LinkedList}.
    *
    * @return An instance of {@link Iterator}.
-   * @see Iterator
    * @see Iterable
-   * @see LinkedList
    */
   @Override
   public Iterator<E> iterator() {
-    return new LinkedListIterator(this.sentinel);
+    return new LinkedListIterator(this.sentinel, this.size);
   }
 
   /**
@@ -122,22 +127,26 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     if (this.isEmpty()) {
       return "Empty";
     }
-
     final Iterator<E> iterator = this.iterator();
     final StringBuilder stringBuilder = new StringBuilder();
-    while (iterator.hasNext()) {
-      stringBuilder.append(iterator.next().toString()).append("\n");
+    try {
+      while (iterator.hasNext()) {
+        stringBuilder.append(iterator.next().toString()).append("\n");
+      }
+    } catch (NoSuchElementException e) {
+      // Hit end of list; that's fine, just continue
     }
     return stringBuilder.toString();
   }
 
   /** Implementation of the {@link Iterator} interface for iterating a {@link LinkedList}. */
   private class LinkedListIterator implements Iterator<E> {
-    // LinkedListIterator instance variables
-    private Node<E> current;
+    private final int expectedModCount; // For checking if the container has modified.
+    private Node<E> current; // For traversing the list.
 
-    public LinkedListIterator(final Node<E> sentinel) {
+    public LinkedListIterator(final Node<E> sentinel, final int modCount) {
       this.current = sentinel;
+      this.expectedModCount = modCount;
     }
 
     @Override
@@ -147,14 +156,14 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
 
     @Override
     public E next() {
+      if (expectedModCount != modCount) {
+        throw new ConcurrentModificationException("List was modified.");
+      }
+      if (!hasNext()) {
+        throw new NoSuchElementException("End of list.");
+      }
       current = current.getNext();
       return current.getData();
-    }
-
-    public void insertBefore(final E data) {
-      final Node<E> newNode = new Node<E>(data, current, current.getPrev());
-      current.getPrev().setNext(newNode);
-      current.setPrev(newNode);
     }
   }
 }

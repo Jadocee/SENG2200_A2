@@ -5,7 +5,11 @@
  * 23/03/2022
  */
 
-/** */
+/**
+ * Extension of {@link LinkedList} that sorts the list by descending order of area.
+ *
+ * @param <E> the type of {@link PlanarShape} elements stored.
+ */
 public class SortedLinkedList<E extends PlanarShape> extends LinkedList<E> {
 
   public SortedLinkedList() {
@@ -18,19 +22,13 @@ public class SortedLinkedList<E extends PlanarShape> extends LinkedList<E> {
    * @param data The {@link PlanarShape} object to be added to this {@link SortedLinkedList}.
    */
   public void insertInOrder(final E data) {
-    Node<E> current = this.sentinel.getNext();
-    while (current != this.sentinel) {
+    Node<E> current = this.sentinel;
+    while ((current = current.getNext()) != this.sentinel) {
       if (data.compareTo(current.getData()) > 0) {
         break;
-      } else {
-        current = current.getNext();
       }
     }
-    final Node<E> newNode = new Node<>(data, current, current.getPrev());
-    current.getPrev().setNext(newNode);
-    current.setPrev(newNode);
-    size++;
-    modCount++;
+    connect(data, current, current.getPrev());
   }
 
   /**

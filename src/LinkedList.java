@@ -9,7 +9,11 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/** Implementation of a <em>circular doubly linked list</em> data structure. */
+/**
+ * Implementation of a <em>circular doubly linked list</em> data structure.
+ *
+ * @param <E> the type of {@link PlanarShape} elements stored.
+ */
 public class LinkedList<E extends PlanarShape> implements Iterable<E> {
   // Instance variables
   protected final Node<E> sentinel;
@@ -31,11 +35,7 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
    * @param data The {@link PlanarShape} object to be appended to the end of the {@link LinkedList}.
    */
   public void append(final E data) throws UnsupportedOperationException {
-    final Node<E> newNode = new Node<E>(data, sentinel, sentinel.getPrev());
-    sentinel.getPrev().setNext(newNode);
-    sentinel.setPrev(newNode);
-    size++;
-    modCount++;
+    connect(data, sentinel, sentinel.getPrev());
   }
 
   /**
@@ -44,9 +44,13 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
    * @param data The {@link PlanarShape} object to be prepended to the {@link LinkedList}.
    */
   public void prepend(final E data) throws UnsupportedOperationException {
-    final Node<E> newNode = new Node<E>(data, sentinel.getNext(), sentinel);
-    sentinel.getNext().setPrev(newNode);
-    sentinel.setNext(newNode);
+    connect(data, sentinel.getNext(), sentinel);
+  }
+
+  protected void connect(final E data, final Node<E> next, final Node<E> prev) {
+    final Node<E> newNode = new Node<>(data, next, prev);
+    next.setPrev(newNode);
+    prev.setNext(newNode);
     size++;
     modCount++;
   }

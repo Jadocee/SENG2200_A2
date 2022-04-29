@@ -161,13 +161,18 @@ public class LinkedList<E extends PlanarShape> implements Iterable<E> {
     @Override
     public E next() {
       if (expectedModCount != modCount) {
-        throw new ConcurrentModificationException("List was modified.");
+        throw new ConcurrentModificationException("Unexpected modification of collection.");
       }
       if (!hasNext()) {
-        throw new NoSuchElementException("End of list.");
+        throw new NoSuchElementException("End of collection.");
       }
       current = current.getNext();
       return current.getData();
+    }
+
+    @Override
+    public void remove() {
+      throw new UnsupportedOperationException();
     }
   }
 }

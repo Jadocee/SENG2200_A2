@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class A2 {
 
+    // Constructor method
     public static PlanarShape createShape(final char type, final double[] values) throws IllegalArgumentException {
         switch (type) {
             case 'P' -> {

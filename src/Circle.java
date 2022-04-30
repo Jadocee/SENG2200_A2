@@ -43,7 +43,7 @@ public class Circle extends PlanarShape {
    */
   @Override
   public double area() {
-    return Math.pow(Math.PI * r, 2);
+    return Math.PI * Math.pow(r, 2);
   }
 
   /**

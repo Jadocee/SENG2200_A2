@@ -44,11 +44,12 @@ abstract class PlanarShape implements Comparable<PlanarShape> {
    */
   @Override
   public int compareTo(PlanarShape o) {
-    if (this == o) return 0;
+    if (this == o) {
+      return 0;
+    }
     final double thisArea = this.area();
     final double thatArea = o.area();
-    double diff = Math.abs(thisArea - thatArea);
-    if (diff <= (0.0005 * Math.min(thisArea, thatArea))) {
+    if (Math.abs(thisArea - thatArea) <= (0.0005 * Math.min(thisArea, thatArea))) {
       final double thisDistance = this.originDistance();
       final double thatDistance = o.originDistance();
       // Could be replaced with Double.compare(d1, d2)
